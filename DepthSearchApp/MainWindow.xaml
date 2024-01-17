@@ -9,29 +9,43 @@
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Name="TextMainPath" Margin="2" TextAlignment="Center">Введите путь:</TextBlock>
-            <TextBox Name="MainPath" Margin="2" MaxWidth="200" MinWidth="200"> </TextBox>
+            <TextBox Name="MainPath" Margin="2" MaxWidth="200" MinWidth="200" Text="{Binding Path=MainPath, UpdateSourceTrigger=PropertyChanged}"> </TextBox>
         </StackPanel>
 
         <TextBlock Margin="2" TextAlignment="Center">Фильтры</TextBlock>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <StackPanel Orientation="Vertical">
-                <TextBox Name="NameContains" Margin="2" MaxWidth="100" MinWidth="100"></TextBox>
-                <TextBox Name="CompanyContains" Margin="2" MaxWidth="100" MinWidth="100"></TextBox>
-                <TextBox Name="OrganisationContains" Margin="2" MaxWidth="100" MinWidth="100"></TextBox>
+                <TextBlock Name="TextBoxNameContains" Margin="2" MaxWidth="100" MinWidth="100">Имя файла содержит</TextBlock>
+                <TextBlock Name="TextBoxCompanyContains" Margin="2" MaxWidth="100" MinWidth="100">Название компании содержит</TextBlock>
+                <TextBlock Name="TextBoxOrganisationContains" Margin="2" MaxWidth="100" MinWidth="100">Название организации содержит</TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Vertical">
-                <TextBox Name="DescriptionContains" Margin="2" MaxWidth="100" MinWidth="100"></TextBox>
-                <TextBox Name="VersionContains" Margin="2" MaxWidth="100" MinWidth="100"></TextBox>
-                <TextBox Name="AutorPropertiesContains" Margin="2" MaxWidth="100" MinWidth="100"></TextBox>
+                <TextBox Name="NameContains" Margin="2" MaxWidth="100" MinWidth="100" Text="{Binding Path=NameContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <TextBox Name="CompanyContains" Margin="2" MaxWidth="100" MinWidth="100" Text="{Binding Path=CompanyContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <TextBox Name="OrganisationContains" Margin="2" MaxWidth="100" MinWidth="100" Text="{Binding Path=OrganisationContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            </StackPanel>
+
+
+            <StackPanel Orientation="Vertical">
+                <TextBlock Name="TextBoxDescriptionContains" Margin="2" MaxWidth="100" MinWidth="100">Описание файла содержит</TextBlock>
+                <TextBlock Name="TextBoxVersionContains" Margin="2" MaxWidth="100" MinWidth="100">Версия содержит</TextBlock>
+                <TextBlock Name="TextBoxAuthorPropertiesContains" Margin="2" MaxWidth="100" MinWidth="100">Авторские права содержат</TextBlock>
+            </StackPanel>
+
+
+            <StackPanel Orientation="Vertical">
+                <TextBox Name="DescriptionContains" Margin="2" MaxWidth="100" MinWidth="100" Text="{Binding Path=DescriptionContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <TextBox Name="VersionContains" Margin="2" MaxWidth="100" MinWidth="100" Text="{Binding Path=VersionContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <TextBox Name="AuthorPropertiesContains" Margin="2" MaxWidth="100" MinWidth="100" Text="{Binding Path=AuthorPropertiesContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </StackPanel>
 
         </StackPanel>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Name="TextFiles" Margin="2" Width="{Binding ElementName=TextMainPath, Path=ActualWidth}" TextAlignment="Center">Файлы</TextBlock>
-            <ComboBox Name="FilePath" Margin="2" Width="{Binding ElementName=MainPath, Path=ActualWidth}">
+            <ComboBox Name="AllFilesInMainPath" Margin="2" Width="{Binding ElementName=MainPath, Path=ActualWidth}" SelectedItem="{Binding Path=SelectedItem}" ItemsSource="{Binding Path=AllFiles}">
             </ComboBox>
         </StackPanel>
         
