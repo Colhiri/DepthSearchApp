@@ -63,7 +63,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\SearchFilters.cs" />
+    <Compile Include="Models\AllFilesModel.cs" />
+    <Compile Include="Models\FileModel.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

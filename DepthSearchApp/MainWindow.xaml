@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:DepthSearchApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <local:ViewModel/>
+    </Window.DataContext>
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Name="TextMainPath" Margin="2" TextAlignment="Center">Введите путь:</TextBlock>
@@ -27,13 +30,11 @@
                 <TextBox Name="OrganisationContains" Margin="2" MaxWidth="100" MinWidth="100" Text="{Binding Path=OrganisationContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </StackPanel>
 
-
             <StackPanel Orientation="Vertical">
                 <TextBlock Name="TextBoxDescriptionContains" Margin="2" MaxWidth="100" MinWidth="100">Описание файла содержит</TextBlock>
                 <TextBlock Name="TextBoxVersionContains" Margin="2" MaxWidth="100" MinWidth="100">Версия содержит</TextBlock>
                 <TextBlock Name="TextBoxAuthorPropertiesContains" Margin="2" MaxWidth="100" MinWidth="100">Авторские права содержат</TextBlock>
             </StackPanel>
-
 
             <StackPanel Orientation="Vertical">
                 <TextBox Name="DescriptionContains" Margin="2" MaxWidth="100" MinWidth="100" Text="{Binding Path=DescriptionContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
@@ -48,7 +49,7 @@
             <ComboBox Name="AllFilesInMainPath" Margin="2" Width="{Binding ElementName=MainPath, Path=ActualWidth}" SelectedItem="{Binding Path=SelectedItem}" ItemsSource="{Binding Path=AllFiles}">
             </ComboBox>
         </StackPanel>
-        
+
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Name="btnMoveAll" Margin="2">Переместить все</Button>
             <Button Name="btnMove" Margin="2">Переместить файл</Button>
