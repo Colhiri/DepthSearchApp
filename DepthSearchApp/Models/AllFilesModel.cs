@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DepthSearchApp.Models
 {
-    public class AllFilesModel : INotifyPropertyChanged
+    public class AllFilesModel : MainModel
     {
-        public static List<string> FilesInDirectories(string path) => Directory.GetFileSystemEntries(path).ToList();
-        public static List<string> AddFiles(string path) => Directory.GetFiles(path).ToList();
-        public static List<string> AddDirectories(string path) => Directory.GetDirectories(path).ToList();
-        public static List<string> listDir = new List<string>() { };
-        public static List<string> listFiles = new List<string>();
-        public static int CountDir = 0;
+        private static List<string> FilesInDirectories(string path) => Directory.GetFileSystemEntries(path).ToList();
+        private static List<string> AddFiles(string path) => Directory.GetFiles(path).ToList();
+        private static List<string> AddDirectories(string path) => Directory.GetDirectories(path).ToList();
+        private static List<string> listDir = new List<string>() { };
+        private static List<string> listFiles = new List<string>();
+        private static int CountDir = 0;
 
         public static List<string> RecursiveAllFiles(string path)
         {
@@ -53,7 +48,5 @@ namespace DepthSearchApp.Models
             }
             return null;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -1,23 +1,19 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 using DepthSearchApp.Models;
+using DepthSearchApp.ViewModels;
 
 namespace DepthSearchApp
 {
-    public class ViewModel : INotifyPropertyChanged
+    /// <summary>
+    /// ViewModel Window FIlters App
+    /// </summary>
+    public class FiltersViewModel : MainViewModel
     {
         private AllFilesModel allFilesModel = new AllFilesModel();
+        public ReadOnlyObservableCollection<string> AllFiles { get => allFilesModel.SearchFiles(_MainPath); }
 
         private string _MainPath;
-        private string _NameContains;
-        private string _CompanyContains;
-        private string _OrganisationContains;
-        private string _DescriptionContains;
-        private string _VersionContains;
-        private string _AuthorPropertiesContains;
-
         public string MainPath
         {
             get { return _MainPath; }
@@ -28,6 +24,7 @@ namespace DepthSearchApp
             }
         }
 
+        private string _NameContains;
         public string NameContains
         {
             get { return _NameContains; }
@@ -37,6 +34,8 @@ namespace DepthSearchApp
                 OnPropertyChanged("AllFiles");
             }
         }
+
+        private string _CompanyContains;
         public string CompanyContains
         {
             get { return _CompanyContains; }
@@ -46,6 +45,8 @@ namespace DepthSearchApp
                 OnPropertyChanged("AllFiles");
             }
         }
+
+        private string _OrganisationContains;
         public string OrganisationContains
         {
             get { return _OrganisationContains; }
@@ -55,6 +56,8 @@ namespace DepthSearchApp
                 OnPropertyChanged("AllFiles");
             }
         }
+
+        private string _DescriptionContains;
         public string DescriptionContains
         {
             get { return _DescriptionContains; }
@@ -64,6 +67,8 @@ namespace DepthSearchApp
                 OnPropertyChanged("AllFiles");
             }
         }
+
+        private string _VersionContains;
         public string VersionContains
         {
             get { return _VersionContains; }
@@ -73,6 +78,8 @@ namespace DepthSearchApp
                 OnPropertyChanged("AllFiles");
             }
         }
+
+        private string _AuthorPropertiesContains;
         public string AuthorPropertiesContains
         {
             get { return _AuthorPropertiesContains; }
@@ -80,21 +87,6 @@ namespace DepthSearchApp
             {
                 _AuthorPropertiesContains = value;
                 OnPropertyChanged("AllFiles");
-            }
-        }
-
-        public ReadOnlyObservableCollection<string> AllFiles
-        {
-            get => allFilesModel.SearchFiles(_MainPath);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName]string propertyName="")
-        {
-            if (PropertyChanged != null)
-            {
-                //PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }

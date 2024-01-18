@@ -10,7 +10,7 @@ namespace DepthSearchApp
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ViewModel();
+            DataContext = new FiltersViewModel();
         }
     }
 }

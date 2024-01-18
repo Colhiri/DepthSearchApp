@@ -1,10 +1,9 @@
 ﻿namespace DepthSearchApp.Models
 {
     /// <summary>
-    /// VIewmodel selected file
+    /// Base class to all models
     /// </summary>
-    public class FileModel : MainModel
+    public class MainModel
     {
-
     }
 }
