@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DepthSearchApp"
+        xmlns:local="clr-namespace:DepthSearchApp" d:DataContext="{d:DesignInstance Type=local:FiltersViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel Orientation="Vertical">
@@ -43,8 +43,12 @@
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Name="TextFiles" Margin="2" Width="{Binding ElementName=TextMainPath, Path=ActualWidth}" TextAlignment="Center">Файлы</TextBlock>
-            <ComboBox Name="AllFilesInMainPath" Margin="2" Width="{Binding ElementName=MainPath, Path=ActualWidth}" SelectedItem="{Binding Path=SelectedItem}" ItemsSource="{Binding Path=AllFiles}">
+            <ComboBox Name="AllFilesInMainPath" Margin="2" Width="{Binding ElementName=MainPath, Path=ActualWidth}" SelectedItem="{Binding Path=SelectedFile}" ItemsSource="{Binding Path=AllFiles}">
             </ComboBox>
+
+            <Button Name="btnEditFile" Margin="2" Command="{Binding ShowMessage}">
+                Изменить файл    
+            </Button>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -53,7 +57,6 @@
             <Button Name="btnDeleteAll" Margin="2">Удалить все</Button>
             <Button Name="btnDelete" Margin="2">Удалить файл</Button>
         </StackPanel>
-        
         
     </StackPanel>
 </Window>

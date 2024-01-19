@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using DepthSearchApp.ViewModels;
+using System.Windows;
 
 namespace DepthSearchApp
 {
@@ -10,7 +11,7 @@ namespace DepthSearchApp
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new FiltersViewModel();
+            this.DataContext = new FiltersViewModel();
         }
     }
 }

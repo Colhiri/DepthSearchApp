@@ -1,0 +1,25 @@
+﻿<Window x:Class="DepthSearchApp.Views.FileEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DepthSearchApp.ViewModels" d:DataContext="{d:DesignInstance Type=local:FileViewModel}"
+        mc:Ignorable="d"
+        Title="FileEditWindow" Height="450" Width="800">
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock>Только для чтения</TextBlock>
+            <CheckBox Name="ReadOnlyCheckBox" Margin="2" IsChecked="{Binding Path=IsReadOnly}"></CheckBox>
+            <TextBlock>Скрытый</TextBlock>
+            <CheckBox Name="HiddenCheckBox" Margin="2" IsChecked="{Binding Path=IsHidden}"></CheckBox>
+            <TextBlock>Архивный</TextBlock>
+            <CheckBox Name="ArchiveCheckBox" Margin="2" IsChecked="{Binding Path=IsArchive}"></CheckBox>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBlock>Только для чтения</TextBlock>
+            <TextBlock>Только для чтения</TextBlock>
+            <TextBlock>Только для чтения</TextBlock>
+        </StackPanel>
+    </StackPanel>
+</Window>

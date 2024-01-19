@@ -1,10 +1,14 @@
 ﻿namespace DepthSearchApp.Models
 {
     /// <summary>
-    /// VIewmodel selected file
+    /// Viewmodel selected file
     /// </summary>
     public class FileModel : MainModel
     {
+
+        
+
+
 
     }
 }
