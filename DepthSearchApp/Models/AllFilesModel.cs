@@ -5,16 +5,46 @@ using System.Linq;
 
 namespace DepthSearchApp.Models
 {
+    /// <summary>
+    /// Модель основного окна
+    /// </summary>
     public class AllFilesModel : MainModel
     {
-        private static List<string> FilesInDirectories(string path) => Directory.GetFileSystemEntries(path).ToList();
-        private static List<string> AddFiles(string path) => Directory.GetFiles(path).ToList();
-        private static List<string> AddDirectories(string path) => Directory.GetDirectories(path).ToList();
-        private static List<string> listDir = new List<string>() { };
-        private static List<string> listFiles = new List<string>();
-        private static int CountDir = 0;
+        /// <summary>
+        /// Получить файлы из директории
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private List<string> AddFiles(string path) => Directory.GetFiles(path).ToList();
 
-        public static List<string> RecursiveAllFiles(string path)
+        /// <summary>
+        /// Получить сабдиректории из выбранной директории
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private List<string> AddDirectories(string path) => Directory.GetDirectories(path).ToList();
+
+        /// <summary>
+        /// Сохранение всех найденных директорий
+        /// </summary>
+        private List<string> listDir = new List<string>();
+
+        /// <summary>
+        /// Сохранение всех найденных файлов
+        /// </summary>
+        private List<string> listFiles = new List<string>();
+
+        /// <summary>
+        /// Счетчик директорий для продвижения по листу
+        /// </summary>
+        private int CountDir = 0;
+
+        /// <summary>
+        /// Рекурсивный поиск всех файлов в директориях
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private List<string> RecursiveAllFiles(string path)
         {
             if (listDir.Count == 0)
             {
@@ -34,14 +64,24 @@ namespace DepthSearchApp.Models
             }
         }
 
+        /// <summary>
+        /// Проверка существования пути
+        /// </summary>
+        /// <param name="Path"></param>
+        /// <returns></returns>
         public bool ValidationPath(string Path)
         {
             return Directory.Exists(Path);
         }
 
+        /// <summary>
+        /// Поиск файлов
+        /// </summary>
+        /// <param name="Path"></param>
+        /// <returns></returns>
         public ReadOnlyObservableCollection<string> SearchFiles(string Path)
         {
-            if (Directory.Exists(Path))
+            if (ValidationPath(Path))
             {
                 List<string> AllFiles = RecursiveAllFiles(Path);
                 return new ReadOnlyObservableCollection<string>(new ObservableCollection<string>(AllFiles));

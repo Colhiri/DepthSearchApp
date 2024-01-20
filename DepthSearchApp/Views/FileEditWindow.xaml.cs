@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace DepthSearchApp.Views
 {
     /// <summary>
-    /// Логика взаимодействия для Window1.xaml
+    /// Логика взаимодействия для FileEditWindow.xaml
     /// </summary>
     public partial class FileEditWindow : Window
     {

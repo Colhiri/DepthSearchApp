@@ -3,23 +3,47 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DepthSearchApp.ViewModels" d:DataContext="{d:DesignInstance Type=local:FileViewModel}"
+        xmlns:local="clr-namespace:DepthSearchApp.ViewModels" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" d:DataContext="{d:DesignInstance Type=local:FileViewModel}"
         mc:Ignorable="d"
-        Title="FileEditWindow" Height="450" Width="800">
-    <StackPanel Orientation="Vertical">
-        <StackPanel Orientation="Horizontal">
-            <TextBlock>Только для чтения</TextBlock>
-            <CheckBox Name="ReadOnlyCheckBox" Margin="2" IsChecked="{Binding Path=IsReadOnly}"></CheckBox>
-            <TextBlock>Скрытый</TextBlock>
-            <CheckBox Name="HiddenCheckBox" Margin="2" IsChecked="{Binding Path=IsHidden}"></CheckBox>
-            <TextBlock>Архивный</TextBlock>
-            <CheckBox Name="ArchiveCheckBox" Margin="2" IsChecked="{Binding Path=IsArchive}"></CheckBox>
-        </StackPanel>
+        Title="FileEditWindow" Height="450" Width="800"
+        >
+    <i:Interaction.Triggers>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal">
-            <TextBlock>Только для чтения</TextBlock>
-            <TextBlock>Только для чтения</TextBlock>
-            <TextBlock>Только для чтения</TextBlock>
-        </StackPanel>
-    </StackPanel>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Path=SelectedFile}"></TextBlock>
+        
+        <TextBlock Grid.Row="1" Grid.Column="0">Изменить имя файла</TextBlock>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="FileNameTextBox" Margin="2" Text="{Binding Path=FileName}" MinWidth="150"></TextBox>
+
+        <TextBlock Grid.Row="2" Grid.Column="0">Только для чтения</TextBlock>
+        <CheckBox Grid.Row="2" Grid.Column="1" Name="ReadOnlyCheckBox" Margin="2" IsChecked="{Binding Path=IsReadOnly}"></CheckBox>
+
+        <TextBlock Grid.Row="3" Grid.Column="0">Скрытый</TextBlock>
+        <CheckBox Grid.Row="3" Grid.Column="1" Name="HiddenCheckBox" Margin="2" 
+                  IsChecked="{Binding Path=IsHidden}"
+                  IsEnabled="True"></CheckBox>
+
+        <TextBlock Grid.Row="4" Grid.Column="0">Архивный</TextBlock>
+        <CheckBox Grid.Row="4" Grid.Column="1" Name="ArchiveCheckBox" Margin="2" 
+                  IsChecked="{Binding Path=IsArchive}"
+                  IsEnabled="True"></CheckBox>
+
+        <TextBlock Grid.Row="5" Grid.Column="0">Зашифрованный</TextBlock>
+        <CheckBox  Grid.Row="5" Grid.Column="1" Name="EncryptedCheckBox" Margin="2" 
+                   IsChecked="{Binding Path=IsEncrypted}"
+                   IsEnabled="True"></CheckBox>
+    </Grid>
 </Window>

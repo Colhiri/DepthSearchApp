@@ -1,11 +1,9 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace DepthSearchApp.Commands
 {
-    public class RelayCommand : ICommand, INotifyPropertyChanged
+    public class RelayCommand : ICommand
     {
         public RelayCommand(Action<object> _Execute, Func<object, bool> _CanExecute)
         {
@@ -30,17 +28,6 @@ namespace DepthSearchApp.Commands
         public void Execute(object parameter)
         {
             this._Execute(parameter);
-        }
-        #endregion
-
-        #region INotifyPropertyChanged implement
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
         #endregion
     }

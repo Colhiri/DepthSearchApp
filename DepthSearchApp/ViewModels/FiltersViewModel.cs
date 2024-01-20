@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
 using DepthSearchApp.Commands;
 using DepthSearchApp.Models;
 using DepthSearchApp.ViewModels;
@@ -14,16 +11,33 @@ namespace DepthSearchApp
     /// </summary>
     public class FiltersViewModel : MainViewModel
     {
+        /// <summary>
+        /// Модель для основного окна
+        /// </summary>
         private AllFilesModel allFilesModel = new AllFilesModel();
+
+        /// <summary>
+        /// Коллекция объектов всех найденных файлов по пути
+        /// </summary>
         public ReadOnlyObservableCollection<string> AllFiles { get => allFilesModel.SearchFiles(_MainPath); }
 
+        /// <summary>
+        /// Выбранный файл
+        /// </summary>
         private string _SelectedFile;
         public string SelectedFile
         {
             get { return _SelectedFile; }
-            set { _SelectedFile = value; }
+            set 
+            { 
+                _SelectedFile = value;
+                OnPropertyChanged("ButtonEditFileEnabled");
+            }
         }
 
+        /// <summary>
+        /// Основной путь
+        /// </summary>
         private string _MainPath;
         public string MainPath
         {
@@ -35,6 +49,9 @@ namespace DepthSearchApp
             }
         }
 
+        /// <summary>
+        /// Что должно содержаться в имени файла
+        /// </summary>
         private string _NameContains;
         public string NameContains
         {
@@ -46,6 +63,9 @@ namespace DepthSearchApp
             }
         }
 
+        /// <summary>
+        /// Что должно содержаться в названии компании файла
+        /// </summary>
         private string _CompanyContains;
         public string CompanyContains
         {
@@ -57,6 +77,9 @@ namespace DepthSearchApp
             }
         }
 
+        /// <summary>
+        /// Что должно содержаться в названии организации, которая создала файл файла
+        /// </summary>
         private string _OrganisationContains;
         public string OrganisationContains
         {
@@ -68,6 +91,9 @@ namespace DepthSearchApp
             }
         }
 
+        /// <summary>
+        /// Что должно содержаться в описании файла
+        /// </summary>
         private string _DescriptionContains;
         public string DescriptionContains
         {
@@ -79,6 +105,9 @@ namespace DepthSearchApp
             }
         }
 
+        /// <summary>
+        /// Что должно содержаться в версии файла
+        /// </summary>
         private string _VersionContains;
         public string VersionContains
         {
@@ -90,6 +119,9 @@ namespace DepthSearchApp
             }
         }
 
+        /// <summary>
+        /// Что должно содержаться в авторских свойствах файла
+        /// </summary>
         private string _AuthorPropertiesContains;
         public string AuthorPropertiesContains
         {
@@ -101,6 +133,14 @@ namespace DepthSearchApp
             }
         }
 
+        /// <summary>
+        /// Активна ли кнорпка изменения файла (выбран ли файл для редактирования свойств)
+        /// </summary>
+        public bool ButtonEditFileEnabled { get => SelectedFile != null; }
+
+        /// <summary>
+        /// Команда показа окна изменения файла
+        /// </summary>
         private RelayCommand _ShowMessage;
         public RelayCommand ShowMessage
         {
@@ -109,34 +149,12 @@ namespace DepthSearchApp
                 if (_ShowMessage == null)
                 {
                     _ShowMessage = new RelayCommand(o =>
-                    new FileEditWindow() { DataContext = new FileViewModel()}.Show(), null);
-                    // MessageBox.Show("FFFF"), null); ;
+                    new FileEditWindow() { 
+                        DataContext = new FileViewModel(SelectedFile) 
+                    }.Show(), null);
                 }
                 return _ShowMessage;
             }
-        }
-    }
-
-
-    public class OpenChildWindow : ICommand
-    {
-        private MainViewModel _MainViewModel;
-
-        public OpenChildWindow(MainViewModel MainViewModel) 
-        {
-            this._MainViewModel = MainViewModel;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter) => true;
-
-        public void Execute(object parameter)
-        {
-            var window = (Window)Activator.CreateInstance(typeof(FileEditWindow));
-
-            window.Show();
-
         }
     }
 }

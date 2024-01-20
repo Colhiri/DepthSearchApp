@@ -5,58 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DepthSearchApp" d:DataContext="{d:DesignInstance Type=local:FiltersViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <StackPanel Orientation="Vertical">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Name="TextMainPath" Margin="2" TextAlignment="Center">Введите путь:</TextBlock>
-            <TextBox Name="MainPath" Margin="2" MaxWidth="200" MinWidth="200" Text="{Binding Path=MainPath, UpdateSourceTrigger=PropertyChanged}"> </TextBox>
-        </StackPanel>
+        Title="Search File" Height="450" Width="800">
+    <Grid ShowGridLines="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
 
-        <TextBlock Margin="2" TextAlignment="Center">Фильтры</TextBlock>
-        
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Name="TextBoxNameContains" Margin="2" MaxWidth="100" MinWidth="100">Имя файла содержит</TextBlock>
-                <TextBlock Name="TextBoxCompanyContains" Margin="2" MaxWidth="100" MinWidth="100">Название компании содержит</TextBlock>
-                <TextBlock Name="TextBoxOrganisationContains" Margin="2" MaxWidth="100" MinWidth="100">Название организации содержит</TextBlock>
-            </StackPanel>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+           Name="TextMainPath" Margin="2" TextAlignment="Center">Введите путь:</TextBlock>
+        <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Name="MainPath" Margin="2" MaxWidth="200" MinWidth="200" Text="{Binding Path=MainPath, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
-            <StackPanel Orientation="Vertical">
-                <TextBox Name="NameContains" Margin="2" MaxWidth="100" MinWidth="100" Text="{Binding Path=NameContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                <TextBox Name="CompanyContains" Margin="2" MaxWidth="100" MinWidth="100" Text="{Binding Path=CompanyContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                <TextBox Name="OrganisationContains" Margin="2" MaxWidth="100" MinWidth="100" Text="{Binding Path=OrganisationContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            </StackPanel>
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Margin="2" TextAlignment="Center">Фильтры</TextBlock>
 
-            <StackPanel Orientation="Vertical">
-                <TextBlock Name="TextBoxDescriptionContains" Margin="2" MaxWidth="100" MinWidth="100">Описание файла содержит</TextBlock>
-                <TextBlock Name="TextBoxVersionContains" Margin="2" MaxWidth="100" MinWidth="100">Версия содержит</TextBlock>
-                <TextBlock Name="TextBoxAuthorPropertiesContains" Margin="2" MaxWidth="100" MinWidth="100">Авторские права содержат</TextBlock>
-            </StackPanel>
+        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1" Name="TextBlockNameContains" TextWrapping="Wrap" Margin="2" MaxWidth="200" MinWidth="100">Имя файла содержит</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="1" Name="TextBlockCompanyContains" TextWrapping="Wrap" Margin="2" MaxWidth="200" MinWidth="100">Название компании содержит</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="1" Name="TextBlockOrganisationContains" TextWrapping="Wrap"  Margin="2" MaxWidth="200" MinWidth="100">Название организации содержит</TextBlock>
 
-            <StackPanel Orientation="Vertical">
-                <TextBox Name="DescriptionContains" Margin="2" MaxWidth="100" MinWidth="100" Text="{Binding Path=DescriptionContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                <TextBox Name="VersionContains" Margin="2" MaxWidth="100" MinWidth="100" Text="{Binding Path=VersionContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                <TextBox Name="AuthorPropertiesContains" Margin="2" MaxWidth="100" MinWidth="100" Text="{Binding Path=AuthorPropertiesContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            </StackPanel>
+        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Name="NameContains" Margin="2" MinWidth="200" Text="{Binding Path=NameContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Name="CompanyContains" Margin="2" MinWidth="200" Text="{Binding Path=CompanyContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" Name="OrganisationContains" Margin="2" MinWidth="200" Text="{Binding Path=OrganisationContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
-        </StackPanel>
-        
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Name="TextFiles" Margin="2" Width="{Binding ElementName=TextMainPath, Path=ActualWidth}" TextAlignment="Center">Файлы</TextBlock>
-            <ComboBox Name="AllFilesInMainPath" Margin="2" Width="{Binding ElementName=MainPath, Path=ActualWidth}" SelectedItem="{Binding Path=SelectedFile}" ItemsSource="{Binding Path=AllFiles}">
-            </ComboBox>
+        <TextBlock Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="1" Name="TextBoxDescriptionContains" TextWrapping="Wrap" Margin="2" MaxWidth="200" MinWidth="100">Описание файла содержит</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="1" Name="TextBoxVersionContains" TextWrapping="Wrap" Margin="2" MaxWidth="200" MinWidth="100">Версия содержит</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="1" Name="TextBoxAuthorPropertiesContains" TextWrapping="Wrap" Margin="2" MaxWidth="200" MinWidth="100">Авторские права содержат</TextBlock>
 
-            <Button Name="btnEditFile" Margin="2" Command="{Binding ShowMessage}">
-                Изменить файл    
-            </Button>
-        </StackPanel>
+        <TextBox Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="1" Name="DescriptionContains" Margin="2" MinWidth="200" Text="{Binding Path=DescriptionContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="1" Name="VersionContains" Margin="2" MinWidth="200" Text="{Binding Path=VersionContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="1" Name="AuthorPropertiesContains" Margin="2" MinWidth="200" Text="{Binding Path=AuthorPropertiesContains, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Name="btnMoveAll" Margin="2">Переместить все</Button>
-            <Button Name="btnMove" Margin="2">Переместить файл</Button>
-            <Button Name="btnDeleteAll" Margin="2">Удалить все</Button>
-            <Button Name="btnDelete" Margin="2">Удалить файл</Button>
-        </StackPanel>
-        
-    </StackPanel>
+        <TextBlock  Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="1" Name="TextFiles" Margin="2" TextAlignment="Center">Файлы</TextBlock>
+        <ComboBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Name="AllFilesInMainPath" Margin="2" Width="{Binding ElementName=MainPath, Path=ActualWidth}" 
+          SelectedItem="{Binding Path=SelectedFile, UpdateSourceTrigger=PropertyChanged}" 
+          ItemsSource="{Binding Path=AllFiles}">
+        </ComboBox>
+
+        <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="1" Name="btnEditFile" Margin="2" Command="{Binding ShowMessage}"
+        IsEnabled="{Binding Path=ButtonEditFileEnabled}">
+            Изменить файл
+        </Button>
+
+        <Button Grid.Row="6" Grid.Column="0" Name="btnMoveAll" Margin="2">Переместить все</Button>
+        <Button Grid.Row="6" Grid.Column="1" Name="btnMove" Margin="2">Переместить файл</Button>
+        <Button Grid.Row="6" Grid.Column="2" Name="btnDeleteAll" Margin="2">Удалить все</Button>
+        <Button Grid.Row="6" Grid.Column="3" Name="btnDelete" Margin="2">Удалить файл</Button>
+    </Grid>
 </Window>
