@@ -8,6 +8,9 @@
         Title="FileEditWindow" Height="450" Width="800"
         >
     <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding ApplyParameters}"></i:InvokeCommandAction>
+        </i:EventTrigger> 
     </i:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -15,6 +18,9 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -31,19 +37,9 @@
         <TextBlock Grid.Row="2" Grid.Column="0">Только для чтения</TextBlock>
         <CheckBox Grid.Row="2" Grid.Column="1" Name="ReadOnlyCheckBox" Margin="2" IsChecked="{Binding Path=IsReadOnly}"></CheckBox>
 
-        <TextBlock Grid.Row="3" Grid.Column="0">Скрытый</TextBlock>
-        <CheckBox Grid.Row="3" Grid.Column="1" Name="HiddenCheckBox" Margin="2" 
-                  IsChecked="{Binding Path=IsHidden}"
-                  IsEnabled="True"></CheckBox>
+        <RadioButton Grid.Row="6" Grid.Column="0" GroupName="FileAttributes" IsChecked="{Binding Path=IsHidden}" Content="Скрытый"></RadioButton>
+        <RadioButton Grid.Row="7" Grid.Column="0" GroupName="FileAttributes" IsChecked="{Binding Path=IsArchive}" Content="Архивный"></RadioButton>
+        <RadioButton Grid.Row="8" Grid.Column="0" GroupName="FileAttributes" IsChecked="{Binding Path=IsEncrypted}"  Content="Зашифрованный"></RadioButton>
 
-        <TextBlock Grid.Row="4" Grid.Column="0">Архивный</TextBlock>
-        <CheckBox Grid.Row="4" Grid.Column="1" Name="ArchiveCheckBox" Margin="2" 
-                  IsChecked="{Binding Path=IsArchive}"
-                  IsEnabled="True"></CheckBox>
-
-        <TextBlock Grid.Row="5" Grid.Column="0">Зашифрованный</TextBlock>
-        <CheckBox  Grid.Row="5" Grid.Column="1" Name="EncryptedCheckBox" Margin="2" 
-                   IsChecked="{Binding Path=IsEncrypted}"
-                   IsEnabled="True"></CheckBox>
     </Grid>
 </Window>

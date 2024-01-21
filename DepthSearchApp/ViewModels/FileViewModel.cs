@@ -1,5 +1,7 @@
 ﻿using DepthSearchApp.Commands;
 using DepthSearchApp.Models;
+using System.Windows.Controls;
+using System.Xml.Linq;
 
 namespace DepthSearchApp.ViewModels
 {
@@ -80,7 +82,23 @@ namespace DepthSearchApp.ViewModels
         }
 
         /// <summary>
-        /// NOT WORKIMG
+        /// NOT WORKIMG c:\Users\MSI GP66\Desktop\Stat_v1_19\prot\2023-10-24 Туристскор\Трехосные_КД_ПП\
+        /// 
+        /// <TextBlock Grid.Row="3" Grid.Column="0">Скрытый</TextBlock>
+        /// <CheckBox Grid.Row="3" Grid.Column= "1" Name= "HiddenCheckBox" Margin= "2"
+        ///           IsChecked= "{Binding Path=IsHidden}"
+        ///           IsEnabled= "True" ></ CheckBox >
+        /// 
+        /// < TextBlock Grid.Row= "4" Grid.Column= "0" > Архивный </ TextBlock >
+        /// < CheckBox Grid.Row= "4" Grid.Column= "1" Name= "ArchiveCheckBox" Margin= "2"
+        ///           IsChecked= "{Binding Path=IsArchive}"
+        ///           IsEnabled= "True" ></ CheckBox >
+        /// 
+        /// < TextBlock Grid.Row= "5" Grid.Column= "0" > Зашифрованный </ TextBlock >
+        /// < CheckBox  Grid.Row= "5" Grid.Column= "1" Name= "EncryptedCheckBox" Margin= "2"
+        ///            IsChecked= "{Binding Path=IsEncrypted}"
+        ///            IsEnabled= "True" ></ CheckBox >
+        /// 
         /// </summary>
         private bool _WindowEnabled;
         public bool WindowEnabled 
