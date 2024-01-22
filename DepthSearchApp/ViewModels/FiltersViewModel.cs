@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using DepthSearchApp.Commands;
 using DepthSearchApp.Models;
 using DepthSearchApp.ViewModels;
@@ -35,13 +36,26 @@ namespace DepthSearchApp
             }
         }
 
+        [Conditional("DEBUG")]
+        private void SetMainPath() => _MainPath = @"c:\\Users\\kabanov\\Desktop\\Stat_v1_19\\prot\\2023-11-30 Черногорск\\компрессия\\";
+        public FiltersViewModel()
+        {
+
+            // c:\Users\MSI GP66\Desktop\Stat_v1_19\prot\2023-10-24 Туристскор\Трехосные_КД_ПП\
+            // c:\\Users\\kabanov\\Desktop\\Stat_v1_19\\prot\\2023-11-30 Черногорск\\компрессия\\
+            SetMainPath();
+        }
+
         /// <summary>
         /// Основной путь
         /// </summary>
         private string _MainPath;
         public string MainPath
         {
-            get { return _MainPath; }
+            get
+            {
+                return _MainPath; 
+            }
             set
             {
                 _MainPath = value;

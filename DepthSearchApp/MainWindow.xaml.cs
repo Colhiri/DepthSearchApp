@@ -11,7 +11,6 @@ namespace DepthSearchApp
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new FiltersViewModel();
         }
     }
 }

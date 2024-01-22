@@ -27,7 +27,7 @@ namespace DepthSearchApp
 
             MainWindowViewModel = new FiltersViewModel();
             var window = (Window)Activator.CreateInstance(typeof(MainWindow));
-
+            window.DataContext = MainWindowViewModel;
             window.ShowDialog();
 
             Shutdown();

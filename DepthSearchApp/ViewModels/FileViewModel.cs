@@ -19,7 +19,6 @@ namespace DepthSearchApp.ViewModels
             _IsArchive = FileModel.IsArchive;
             _IsEncrypted = FileModel.IsEncrypted;
             _CreateDate = FileModel.CreateDate;
-            _AccessDate = FileModel.AccessDate;
             _EditDate = FileModel.EditDate;
             _Author = FileModel.Author;
             _Title = FileModel.Title;
@@ -42,13 +41,19 @@ namespace DepthSearchApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// Блокировка редактирования параметров при включении IsReadOnly
+        /// </summary>
+        public bool LockEditParameters {get => !_IsReadOnly; }
+
         private bool _IsReadOnly;
         public bool IsReadOnly
         {
             get { return _IsReadOnly; }
             set 
             { 
-                _IsReadOnly = value; 
+                _IsReadOnly = value;
+                OnPropertyChanged(nameof(LockEditParameters));
             }
         }
 
@@ -102,16 +107,6 @@ namespace DepthSearchApp.ViewModels
             }
         }
 
-        private DateTime _AccessDate;
-        public DateTime AccessDate
-        {
-            get { return _AccessDate; }
-            set
-            {
-                _AccessDate = value;
-            }
-        }
-
         private string _Author;
         public string Author
         {
@@ -132,20 +127,19 @@ namespace DepthSearchApp.ViewModels
         }
 
         /// <summary>
-        /// c:\Users\MSI GP66\Desktop\Stat_v1_19\prot\2023-10-24 Туристскор\Трехосные_КД_ПП\
-        /// c:\Users\kabanov\Desktop\Stat_v1_19\prot\2023-11-30 Черногорск\компрессия\
+        /// Сохранение параметров при выходе из формы
         /// </summary>
         public void SaveCommand()
         {
             FileModel.SetFileName(_FileName);
-            FileModel.SetIsReadOnly(_IsReadOnly);
             FileModel.SetIsHidden(_IsHidden);
             FileModel.SetIsArchive(_IsArchive);
             FileModel.SetDateCreation(_CreateDate);
             FileModel.SetDateEditing(_EditDate);
-            FileModel.SetDateAccess(_AccessDate);
             FileModel.SetAuthor(_Author);
             FileModel.SetTitle(_Title);
+
+            FileModel.SetIsReadOnly(_IsReadOnly);
         }
 
         /// <summary>

@@ -3,7 +3,6 @@ using Microsoft.WindowsAPICodePack.Shell;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Security.AccessControl;
 
 namespace DepthSearchApp.Models
 {
@@ -26,7 +25,6 @@ namespace DepthSearchApp.Models
         public bool IsEncrypted { get; private set; }
         public DateTime CreateDate { get; private set; }
         public DateTime EditDate { get; private set; }
-        public DateTime AccessDate {  get; private set; }
         public string Author {get; private set;}
         public string Title {get; private set;}
 
@@ -49,7 +47,6 @@ namespace DepthSearchApp.Models
             this.IsEncrypted = CheckFileAttribute(FileAttributes.Encrypted);
             this.CreateDate = InfoSelectedFile.CreationTime;
             this.EditDate = InfoSelectedFile.LastWriteTime;
-            this.AccessDate = InfoSelectedFile.LastAccessTime;
             this.Author = String.Join(" ", ShellSelectedFile.Properties.System.Author.Value).Trim();
             this.Title = ShellSelectedFile.Properties.System.Title.Value;
 
@@ -140,27 +137,26 @@ namespace DepthSearchApp.Models
 
         public void SetDateCreation(DateTime NewDate)
         {
+            if (CreateDate == NewDate) return;
             InfoSelectedFile.CreationTime = NewDate;
         }
 
         public void SetDateEditing(DateTime NewDate)
         {
+            if (EditDate == NewDate) return;
             InfoSelectedFile.LastWriteTime = NewDate;
-        }
-
-        public void SetDateAccess(DateTime NewDate)
-        {
-            InfoSelectedFile.LastAccessTime = NewDate;
         }
 
         public void SetAuthor(string NewAuthors)
         {
+            if (Author == NewAuthors) return;
             string[] Authors = NewAuthors.Split(',');
             ShellSelectedFile.Properties.System.Author.Value = Authors;
         }
 
         public void SetTitle(string NewTitle)
         {
+            if (Title == NewTitle) return;
             ShellSelectedFile.Properties.System.Title.Value = NewTitle;
         }
         #endregion
