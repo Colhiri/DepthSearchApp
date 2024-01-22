@@ -1,22 +1,28 @@
 ﻿using DepthSearchApp.Commands;
 using DepthSearchApp.Models;
-using System.Windows.Controls;
-using System.Xml.Linq;
+using System;
 
 namespace DepthSearchApp.ViewModels
 {
     public class FileViewModel : MainViewModel
     {
-        private FileModel FileModel = new FileModel();
+        private FileModel FileModel;
 
         public FileViewModel(string _SelectedFile) 
         {
             this._SelectedFile = _SelectedFile;
-            _FileName = FileModel.GetFileName(SelectedFile);
-            _IsReadOnly = FileModel.GetFileIsReadOnly(SelectedFile);
-            _IsHidden = FileModel.GetFileIsHidden(SelectedFile);
-            _IsArchive = FileModel.GetFileIsArchive(SelectedFile);
-            _IsEncrypted = FileModel.GetFileIsEncrypted(SelectedFile);
+            FileModel = new FileModel(_SelectedFile);
+
+            _FileName = FileModel.FileName;
+            _IsReadOnly = FileModel.IsReadOnly;
+            _IsHidden = FileModel.IsHidden;
+            _IsArchive = FileModel.IsArchive;
+            _IsEncrypted = FileModel.IsEncrypted;
+            _CreateDate = FileModel.CreateDate;
+            _AccessDate = FileModel.AccessDate;
+            _EditDate = FileModel.EditDate;
+            _Author = FileModel.Author;
+            _Title = FileModel.Title;
         }
 
         private string _SelectedFile;
@@ -33,7 +39,6 @@ namespace DepthSearchApp.ViewModels
             set 
             { 
                 _FileName = value;
-                OnPropertyChanged(nameof(FileName));
             }
         }
 
@@ -44,7 +49,6 @@ namespace DepthSearchApp.ViewModels
             set 
             { 
                 _IsReadOnly = value; 
-                OnPropertyChanged(nameof(IsReadOnly));
             }
         }
 
@@ -54,8 +58,7 @@ namespace DepthSearchApp.ViewModels
             get { return _IsHidden; }
             set 
             {
-                _IsHidden = value; 
-                OnPropertyChanged(nameof(IsHidden));
+                _IsHidden = value;
             }
         }
 
@@ -66,7 +69,6 @@ namespace DepthSearchApp.ViewModels
             set
             {
                 _IsArchive = value;
-                OnPropertyChanged(nameof(IsArchive));
             }
         }
 
@@ -77,46 +79,73 @@ namespace DepthSearchApp.ViewModels
             set
             {
                 _IsEncrypted = value;
-                OnPropertyChanged(nameof(IsEncrypted));
+            }
+        }
+
+        private DateTime _CreateDate;
+        public DateTime CreateDate
+        {
+            get { return _CreateDate; }
+            set 
+            {
+                _CreateDate = value;
+            }
+        }
+
+        private DateTime _EditDate;
+        public DateTime EditDate
+        {
+            get { return _EditDate; }
+            set
+            {
+                _EditDate = value;
+            }
+        }
+
+        private DateTime _AccessDate;
+        public DateTime AccessDate
+        {
+            get { return _AccessDate; }
+            set
+            {
+                _AccessDate = value;
+            }
+        }
+
+        private string _Author;
+        public string Author
+        {
+            get { return _Author; }
+            set { 
+                _Author = value;
+            }
+        }
+
+        private string _Title;
+        public string Title
+        {
+            get { return _Title; }
+            set 
+            { 
+                _Title = value;
             }
         }
 
         /// <summary>
-        /// NOT WORKIMG c:\Users\MSI GP66\Desktop\Stat_v1_19\prot\2023-10-24 Туристскор\Трехосные_КД_ПП\
-        /// 
-        /// <TextBlock Grid.Row="3" Grid.Column="0">Скрытый</TextBlock>
-        /// <CheckBox Grid.Row="3" Grid.Column= "1" Name= "HiddenCheckBox" Margin= "2"
-        ///           IsChecked= "{Binding Path=IsHidden}"
-        ///           IsEnabled= "True" ></ CheckBox >
-        /// 
-        /// < TextBlock Grid.Row= "4" Grid.Column= "0" > Архивный </ TextBlock >
-        /// < CheckBox Grid.Row= "4" Grid.Column= "1" Name= "ArchiveCheckBox" Margin= "2"
-        ///           IsChecked= "{Binding Path=IsArchive}"
-        ///           IsEnabled= "True" ></ CheckBox >
-        /// 
-        /// < TextBlock Grid.Row= "5" Grid.Column= "0" > Зашифрованный </ TextBlock >
-        /// < CheckBox  Grid.Row= "5" Grid.Column= "1" Name= "EncryptedCheckBox" Margin= "2"
-        ///            IsChecked= "{Binding Path=IsEncrypted}"
-        ///            IsEnabled= "True" ></ CheckBox >
-        /// 
+        /// c:\Users\MSI GP66\Desktop\Stat_v1_19\prot\2023-10-24 Туристскор\Трехосные_КД_ПП\
+        /// c:\Users\kabanov\Desktop\Stat_v1_19\prot\2023-11-30 Черногорск\компрессия\
         /// </summary>
-        private bool _WindowEnabled;
-        public bool WindowEnabled 
-        { 
-            get { return _WindowEnabled; }
-            set 
-            {
-                SaveCommand();
-                _WindowEnabled = true; 
-            }
-        }
         public void SaveCommand()
         {
-            FileModel.SetFileName(SelectedFile, _FileName);
-            FileModel.SetIsReadOnly(SelectedFile, _IsReadOnly);
-            FileModel.SetIsHidden(SelectedFile, _IsHidden);
-            FileModel.SetIsArchive(SelectedFile, _IsArchive);
-            FileModel.SetIsEncrypted(SelectedFile, _IsEncrypted);
+            FileModel.SetFileName(_FileName);
+            FileModel.SetIsReadOnly(_IsReadOnly);
+            FileModel.SetIsHidden(_IsHidden);
+            FileModel.SetIsArchive(_IsArchive);
+            FileModel.SetDateCreation(_CreateDate);
+            FileModel.SetDateEditing(_EditDate);
+            FileModel.SetDateAccess(_AccessDate);
+            FileModel.SetAuthor(_Author);
+            FileModel.SetTitle(_Title);
         }
 
         /// <summary>

@@ -27,19 +27,46 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Path=SelectedFile}"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Path=SelectedFile}" Margin="3"></TextBlock>
         
-        <TextBlock Grid.Row="1" Grid.Column="0">Изменить имя файла</TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" Name="FileNameTextBox" Margin="2" Text="{Binding Path=FileName}" MinWidth="150"></TextBox>
+        <TextBlock Grid.Row="1" Grid.Column="0" Margin="3">Изменить имя файла</TextBlock>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="FileNameTextBox"
+                 Text="{Binding Path=FileName, UpdateSourceTrigger=PropertyChanged}" MinWidth="150"  Margin="3"></TextBox>
 
-        <TextBlock Grid.Row="2" Grid.Column="0">Только для чтения</TextBlock>
-        <CheckBox Grid.Row="2" Grid.Column="1" Name="ReadOnlyCheckBox" Margin="2" IsChecked="{Binding Path=IsReadOnly}"></CheckBox>
+        <TextBlock Grid.Row="2" Grid.Column="0"  Margin="3">Только для чтения</TextBlock>
+        <CheckBox Grid.Row="2" Grid.Column="1" Name="ReadOnlyCheckBox" Margin="3" IsChecked="{Binding Path=IsReadOnly}"></CheckBox>
 
-        <RadioButton Grid.Row="6" Grid.Column="0" GroupName="FileAttributes" IsChecked="{Binding Path=IsHidden}" Content="Скрытый"></RadioButton>
-        <RadioButton Grid.Row="7" Grid.Column="0" GroupName="FileAttributes" IsChecked="{Binding Path=IsArchive}" Content="Архивный"></RadioButton>
-        <RadioButton Grid.Row="8" Grid.Column="0" GroupName="FileAttributes" IsChecked="{Binding Path=IsEncrypted}"  Content="Зашифрованный"></RadioButton>
+        <!-- <RadioButton Grid.Row="6" Grid.Column="0" GroupName="FileAttributes" IsChecked="{Binding Path=IsHidden}" Content="Скрытый"></RadioButton> -->
+        <!-- <RadioButton Grid.Row="7" Grid.Column="0" GroupName="FileAttributes" IsChecked="{Binding Path=IsArchive}" Content="Архивный"></RadioButton> -->
+        <!-- <RadioButton Grid.Row="8" Grid.Column="0" GroupName="FileAttributes" IsChecked="{Binding Path=IsEncrypted}"  Content="Зашифрованный"></RadioButton> -->
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Margin="3">Скрытый</TextBlock>
+        <CheckBox Grid.Row="3" Grid.Column= "1" Name= "HiddenCheckBox" Margin= "3" IsChecked= "{Binding Path=IsHidden}"></CheckBox>
+        <TextBlock Grid.Row= "4" Grid.Column= "0" Margin="3">Архивный</TextBlock>
+        <CheckBox Grid.Row= "4" Grid.Column= "1" Name= "ArchiveCheckBox" Margin= "3" IsChecked= "{Binding Path=IsArchive}"></CheckBox>
+        <TextBlock Grid.Row= "5" Grid.Column= "0" Margin="3">Зашифрованный</TextBlock>
+        <CheckBox Grid.Row= "5" Grid.Column= "1" Name= "EncryptedCheckBox" Margin= "3" IsChecked= "{Binding Path=IsEncrypted}"></CheckBox>
+
+        <TextBlock Grid.Row= "6" Grid.Column= "0" Margin="3">Дата создания</TextBlock>
+        <TextBox Grid.Row= "6" Grid.Column= "1" Name="DateCreationTextBox" Margin= "3" Text="{Binding Path=CreateDate}"></TextBox>
+
+        <TextBlock Grid.Row= "7" Grid.Column= "0" Margin="3">Дата последнего редактирования</TextBlock>
+        <TextBox Grid.Row= "7" Grid.Column= "1" Name="DateEditTextBox" Margin= "3" Text="{Binding Path=EditDate}"></TextBox>
+
+        <TextBlock Grid.Row= "8" Grid.Column= "0" Margin="3">Дата последнего доступа</TextBlock>
+        <TextBox Grid.Row= "8" Grid.Column= "1" Name="DateAccessTextBox" Margin= "3" Text="{Binding Path=AccessDate}"></TextBox>
+
+        <TextBlock Grid.Row= "9" Grid.Column= "0" Margin="3">Авторы/Автор</TextBlock>
+        <TextBox Grid.Row= "9" Grid.Column= "1" Name="AuthorTextBox" Margin= "3" Text="{Binding Path=Author}"></TextBox>
+
+        <TextBlock Grid.Row= "10" Grid.Column= "0" Margin="3">Заголовок</TextBlock>
+        <TextBox Grid.Row= "10" Grid.Column= "1" Name="TitleTextBox" Margin= "3" Text="{Binding Path=Title}"></TextBox>
 
     </Grid>
 </Window>

@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualBasic.FileIO;
+using Microsoft.WindowsAPICodePack.Shell;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
+using System.Security.AccessControl;
 
 namespace DepthSearchApp.Models
 {
@@ -11,124 +12,156 @@ namespace DepthSearchApp.Models
     /// </summary>
     public class FileModel : MainModel
     {
-        private string GetDirectory(string path) => Path.GetDirectoryName(path);
+        private string PathSelectedFile;
+        private ShellFile ShellSelectedFile;
+        private FileInfo InfoSelectedFile;
+        private FileVersionInfo VersionInfoSelectedFile;
+        private FileAttributes AttributesSelectedFile;
+        private string DirectoryName;
 
+        public string FileName { get; private set; }
+        public bool IsReadOnly { get; private set; }
+        public bool IsHidden { get; private set; }
+        public bool IsArchive { get; private set; }
+        public bool IsEncrypted { get; private set; }
+        public DateTime CreateDate { get; private set; }
+        public DateTime EditDate { get; private set; }
+        public DateTime AccessDate {  get; private set; }
+        public string Author {get; private set;}
+        public string Title {get; private set;}
+
+        public string CompanyNameSelectedFile { get; private set;}
+        public string VersionSelectedFile { get; private set; }
+
+        public FileModel(string PathToFile)
+        {
+            this.PathSelectedFile = PathToFile;
+            this.ShellSelectedFile = ShellFile.FromFilePath(PathToFile);
+            this.InfoSelectedFile = new FileInfo(PathToFile);
+            this.VersionInfoSelectedFile = FileVersionInfo.GetVersionInfo(PathToFile);
+            this.AttributesSelectedFile = File.GetAttributes(PathToFile);
+            this.DirectoryName = InfoSelectedFile.DirectoryName;
+
+            this.FileName = InfoSelectedFile.Name;
+            this.IsReadOnly = InfoSelectedFile.IsReadOnly;
+            this.IsHidden = CheckFileAttribute(FileAttributes.Hidden);
+            this.IsArchive = CheckFileAttribute(FileAttributes.Archive);
+            this.IsEncrypted = CheckFileAttribute(FileAttributes.Encrypted);
+            this.CreateDate = InfoSelectedFile.CreationTime;
+            this.EditDate = InfoSelectedFile.LastWriteTime;
+            this.AccessDate = InfoSelectedFile.LastAccessTime;
+            this.Author = String.Join(" ", ShellSelectedFile.Properties.System.Author.Value).Trim();
+            this.Title = ShellSelectedFile.Properties.System.Title.Value;
+
+            this.CompanyNameSelectedFile = VersionInfoSelectedFile.CompanyName;
+            this.VersionSelectedFile = VersionInfoSelectedFile.FileVersion;
+
+        }
+
+        private bool CheckFileAttribute(FileAttributes Attribute) => (AttributesSelectedFile & Attribute) == Attribute;
+        private FileAttributes RemoveFileAttribute(FileAttributes Attribute) => AttributesSelectedFile & ~Attribute;
+        private bool CheckValidFileName(string FileName) => FileName.IndexOfAny(Path.GetInvalidPathChars()) < 0 || File.Exists(DirectoryName + FileName);
+        
         #region Get Parameter File
-        /// <summary>
-        /// Файл только для чтения?
-        /// </summary>
-        public bool GetFileIsReadOnly(string path)
-        {
-            FileInfo fileInfo = new FileInfo(path);
-            return fileInfo.IsReadOnly;
-        }
-
-        /// <summary>
-        /// Файл скрыт?
-        /// </summary>
-        public bool GetFileIsHidden(string path)
-        {
-            FileInfo fileInfo = new FileInfo(path);
-            // FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(path);
-            // FileSystemInfo fileSystemInfo = fileInfo as FileSystemInfo;
-            return fileInfo.Attributes.HasFlag(FileAttributes.Hidden);
-        }
-
-        /// <summary>
-        /// Файл готов для архивирования?
-        /// </summary>
-        public bool GetFileIsArchive(string path)
-        {
-            FileInfo fileInfo = new FileInfo(path);
-            return fileInfo.Attributes.HasFlag(FileAttributes.Archive);
-        }
-
-        /// <summary>
-        /// Файл зашифрован?
-        /// </summary>
-        public bool GetFileIsEncrypted(string path)
-        {
-            FileInfo fileInfo = new FileInfo(path);
-            return fileInfo.Attributes.HasFlag(FileAttributes.Encrypted);
-        }
-
-        /// <summary>
-        /// Краткое имя файла
-        /// </summary>
-        public string GetFileName(string path)
-        {
-            FileInfo fileInfo = new FileInfo(path);
-            return fileInfo.Name;
-        }
-
-        /// <summary>
-        /// Краткое имя файла
-        /// </summary>
-        public string GetFileCompanyName(string path)
-        {
-            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(path);
-            return fileVersionInfo.CompanyName;
-        }
-
-        /// <summary>
-        /// Дата создания
-        /// </summary>
-        public DateTime GetFileDateCreation(string path)
-        {
-            return DateTime.Now;
-        }
-
-        /// <summary>
-        /// Дата изменения
-        /// </summary>
-        public DateTime GetFileDateEditing(string path)
-        {
-            return DateTime.Now;
-        }
         #endregion
 
         #region Edit Parameter
-        private bool CheckFileAttribute(string path, FileAttributes attr) => File.GetAttributes(path) == attr;
-
-        public void SetIsReadOnly(string path, bool value)
+        public void SetIsReadOnly(bool value)
         {
-            FileInfo fileInfo = new FileInfo(path);
-            if (fileInfo.IsReadOnly != value) fileInfo.IsReadOnly = value;
+            if (IsReadOnly != value)
+            { 
+                InfoSelectedFile.IsReadOnly = value; 
+                IsReadOnly = value;
+            }
         }
 
-        public void SetIsHidden(string path, bool value)
+        public void SetIsHidden(bool value)
         {
-            if (value == CheckFileAttribute(path, FileAttributes.Hidden)) return; 
-            File.SetAttributes(path, FileAttributes.Hidden);
+            if (value == IsHidden) return;
+            switch (value)
+            {
+                case true:
+                    {
+                        File.SetAttributes(PathSelectedFile, File.GetAttributes(PathSelectedFile) | FileAttributes.Hidden);
+                        break;
+                    }
+                case false:
+                    {
+                        FileAttributes newAttr = RemoveFileAttribute(FileAttributes.Hidden);
+                        File.SetAttributes(PathSelectedFile, newAttr);
+                        break;
+                    }
+            }
         }
 
-        public void SetIsArchive(string path, bool value)
+        public void SetIsArchive(bool value)
         {
-            if (value == CheckFileAttribute(path, FileAttributes.Archive)) return;
-            File.SetAttributes(path, FileAttributes.Archive);
+            if (value == IsArchive) return;
+            switch (value) 
+            {
+                case true:
+                {
+                    File.SetAttributes(PathSelectedFile, FileAttributes.Archive);
+                    break;
+                }
+                case false:
+                {
+                    FileAttributes newAttr = RemoveFileAttribute(FileAttributes.Archive);
+                    File.SetAttributes(PathSelectedFile, newAttr);
+                    break;
+                }
+            }
         }
 
-        public void SetIsEncrypted(string path, bool value)
+        public void SetIsEncrypted(bool value)
         {
-            if (value == CheckFileAttribute(path, FileAttributes.Encrypted)) return;
-            File.SetAttributes(path, FileAttributes.Encrypted);
+            if (value == IsEncrypted) return;
+            switch (value)
+            {
+                case true:
+                    {
+                        File.Encrypt(PathSelectedFile);
+                        break;
+                    }
+                case false:
+                    {
+                        File.Decrypt(PathSelectedFile);
+                        break;
+                    }
+            }
         }
 
-        public void SetFileName(string path, string NewName)
+        public void SetFileName(string NewName)
         {
-            FileInfo fileInfo = new FileInfo(path);
-            if (fileInfo.Name == NewName) return;
-            FileSystem.RenameFile(fileInfo.FullName, NewName);
+            if (FileName == NewName ) return;
+            if (!CheckValidFileName(NewName)) return;
+            FileSystem.RenameFile(PathSelectedFile, NewName);
         }
 
-        public void SetDateCreation(string path, DateTime NewDateCreation)
+        public void SetDateCreation(DateTime NewDate)
         {
-
+            InfoSelectedFile.CreationTime = NewDate;
         }
 
-        public void SetDateEditing(string path, DateTime NewDateCreation)
+        public void SetDateEditing(DateTime NewDate)
         {
+            InfoSelectedFile.LastWriteTime = NewDate;
+        }
 
+        public void SetDateAccess(DateTime NewDate)
+        {
+            InfoSelectedFile.LastAccessTime = NewDate;
+        }
+
+        public void SetAuthor(string NewAuthors)
+        {
+            string[] Authors = NewAuthors.Split(',');
+            ShellSelectedFile.Properties.System.Author.Value = Authors;
+        }
+
+        public void SetTitle(string NewTitle)
+        {
+            ShellSelectedFile.Properties.System.Title.Value = NewTitle;
         }
         #endregion
     }
